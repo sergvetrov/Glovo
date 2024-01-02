@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 @Builder
 public class OrderDto {
-    List<String> products;
-    int customerId;
+    private int id;
+    private List<String> products;
+    private int customerId;
 }

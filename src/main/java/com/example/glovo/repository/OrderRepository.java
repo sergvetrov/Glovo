@@ -9,38 +9,54 @@ import java.util.Map;
 
 @Component
 public class OrderRepository {
-    private final Map<Integer, OrderDto> orders = new HashMap<>();
-    private Integer orderId = 0;
+    private final Map<String, OrderDto> orders = new HashMap<>();
+    private int orderId = 0;
 
     public OrderDto findById(int id) {
-        return orders.get(id);
+        if(orders.containsKey(String.valueOf(id))){
+            return orders.get(String.valueOf(id));
+        }
+        return OrderDto.builder().build();
     }
 
     public OrderDto save(OrderDto orderDto) {
-        return orders.put(orderId++, orderDto);
+        orderDto.setId(orderId++);
+        return orders.put(String.valueOf(orderDto.getId()), orderDto);
     }
 
     public OrderDto update(int id, OrderDto orderDto) {
-        return orders.replace(id, orderDto);
+        if(orders.containsKey(String.valueOf(id))){
+            return orders.replace(String.valueOf(id), orderDto);
+        }
+        return OrderDto.builder().build();
     }
 
     public OrderDto updateProducts(int id, String product) {
-        OrderDto currentOrder = orders.get(id);
-        List<String> currentProducts = currentOrder.getProducts();
-        currentProducts.add(product);
-        currentOrder.setProducts(currentProducts);
-        return orders.replace(id, currentOrder);
+        if(orders.containsKey(String.valueOf(id))){
+            OrderDto currentOrder = orders.get(String.valueOf(id));
+            List<String> currentProducts = currentOrder.getProducts();
+            currentProducts.add(product);
+            currentOrder.setProducts(currentProducts);
+            return orders.replace(String.valueOf(id), currentOrder);
+        }
+        return OrderDto.builder().build();
     }
 
     public OrderDto deleteProduct(int id, String product) {
-        OrderDto currentOrder = orders.get(id);
-        List<String> currentProducts = currentOrder.getProducts();
-        currentProducts.remove(product);
-        currentOrder.setProducts(currentProducts);
-        return orders.replace(id, currentOrder);
+        if(orders.containsKey(String.valueOf(id))) {
+            OrderDto currentOrder = orders.get(String.valueOf(id));
+            List<String> currentProducts = currentOrder.getProducts();
+            currentProducts.remove(product);
+            currentOrder.setProducts(currentProducts);
+            return orders.replace(String.valueOf(id), currentOrder);
+        }
+        return OrderDto.builder().build();
     }
 
     public OrderDto delete(int id) {
-        return orders.remove(id);
+        if(orders.containsKey(String.valueOf(id))) {
+            return orders.remove(String.valueOf(id));
+        }
+        return OrderDto.builder().build();
     }
 }
