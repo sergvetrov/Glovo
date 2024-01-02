@@ -18,7 +18,7 @@ public class OrderController {
     }
 
     @PostMapping()
-    public boolean save(@RequestBody OrderDto orderDto) {
+    public OrderDto save(@RequestBody OrderDto orderDto) {
         return orderService.save(orderDto);
     }
 
@@ -32,13 +32,13 @@ public class OrderController {
         return orderService.updateProducts(id, product);
     }
 
-    @DeleteMapping("/{id}/products")
-    public OrderDto deleteProduct(@PathVariable int id, @RequestBody String product) {
-        return orderService.deleteProduct(id, product);
+    @DeleteMapping("/{id}/products/{productName}")
+    public OrderDto deleteProduct(@PathVariable int id, @PathVariable String productName) {
+        return orderService.deleteProduct(id, productName);
     }
 
     @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable int id) {
+    public OrderDto delete(@PathVariable int id) {
         return orderService.delete(id);
     }
 }

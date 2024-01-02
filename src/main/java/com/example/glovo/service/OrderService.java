@@ -16,7 +16,7 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
-    public boolean save(OrderDto orderDto) {
+    public OrderDto save(OrderDto orderDto) {
         return orderRepository.save(orderDto);
     }
 
@@ -32,7 +32,7 @@ public class OrderService {
         return orderRepository.deleteProduct(id, product);
     }
 
-    public boolean delete(int id) {
+    public OrderDto delete(int id) {
         return orderRepository.delete(id);
     }
 }
