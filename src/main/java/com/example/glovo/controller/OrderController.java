@@ -1,6 +1,7 @@
 package com.example.glovo.controller;
 
 import com.example.glovo.dto.OrderDto;
+import com.example.glovo.dto.ProductDto;
 import com.example.glovo.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -28,17 +29,17 @@ public class OrderController {
     }
 
     @PatchMapping("/{id}/products")
-    public OrderDto updateProducts(@PathVariable int id, @RequestBody String product) {
-        return orderService.updateProducts(id, product);
+    public OrderDto updateProducts(@PathVariable int id, @RequestBody ProductDto productDto) {
+        return orderService.addProduct(id, productDto);
     }
 
-    @DeleteMapping("/{id}/products/{productName}")
-    public OrderDto deleteProduct(@PathVariable int id, @PathVariable String productName) {
-        return orderService.deleteProduct(id, productName);
+    @DeleteMapping("/{id}/products/{productId}")
+    public OrderDto deleteProduct(@PathVariable int id, @PathVariable int productId) {
+        return orderService.deleteProduct(id, productId);
     }
 
     @DeleteMapping("/{id}")
-    public OrderDto delete(@PathVariable int id) {
-        return orderService.delete(id);
+    public void delete(@PathVariable int id) {
+        orderService.delete(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.glovo.dto;
 
+import com.example.glovo.enity.ProductEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +11,6 @@ import java.util.List;
 @Data
 @Builder
 public class OrderDto {
-    private int id;
-    private List<String> products;
-    private int customerId;
+    private List<ProductDto> products;
+    private String customerName;
 }
